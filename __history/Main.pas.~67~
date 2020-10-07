@@ -1,0 +1,111 @@
+unit Main;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    Image1: TImage;
+    Timer1: TTimer;
+    Button1: TButton;
+    Button2: TButton;
+    procedure Button1Click(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+type
+  fig=record
+    left:byte;
+    top:byte;
+    vid:byte;
+  end;
+
+var
+  Form1: TForm1;
+  //Игровое поле
+  field:array[1..20,1..10] of byte;
+  //Фигура
+  figure:fig;
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  i: Integer;
+  j: Integer;
+begin
+  field[1,1]:=1;
+  field[1,3]:=3;
+  field[2,2]:=2;
+  field[1,2]:=2;
+
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);//Создаём фигуру
+begin
+  figure.vid:=1;
+  figure.left:=5;
+  figure.top:=1;
+end;
+
+procedure TForm1.FormKeyDown(Sender: TObject; var Key: Word;//При нажатии клавиш клавиатуры
+  Shift: TShiftState);
+begin
+  //ShowMessage(IntToStr(key));
+  case key of
+    65:if figure.left>1 then figure.left:=figure.left-1;//Смещение влево при нажатии A
+    68:if figure.left<10 then figure.left:=figure.left+1;//Смещение вправо при нажатии D
+  end;
+  //Вызываем переотрисовку
+  Timer1Timer(Self);
+end;
+
+procedure TForm1.FormShow(Sender: TObject);//При показе формы отрисовываем белый фон
+begin
+  Image1.Canvas.Brush.Color:=clWhite;
+  Image1.Canvas.FillRect(Image1.BoundsRect);
+  //Button1.ControlState:=[csFocusing];
+  //Button2.ControlState:=[csFocusing];
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);//По щелчку таймера
+var
+  i: Integer;
+  j: Integer;
+begin
+//Отрисовываем игровое поле, предварительно очистив
+  Image1.Picture:=nil;
+  Image1.Canvas.Brush.Color:=clWhite;
+  Image1.Canvas.FillRect(Image1.BoundsRect);
+  for i:=1 to 20 do
+    for j:= 1 to 10 do
+      if field[i,j]<>0 then
+        Image1.Canvas.Rectangle(j*30-30,630-i*30,j*30,600-i*30);
+//Отрисовываем текущую фигуру
+  case figure.vid of
+  1:
+    Image1.Canvas.Rectangle(figure.left*30-30,figure.top*30-30,figure.left*30,figure.top*30)
+  end;
+//Если фигура достигла "низа" или другой фигуры, то генерируем следующую
+  if (figure.top=20) or (field[20-figure.top,figure.left]<>0) then
+    begin
+      field[20-figure.top+1,figure.left]:=figure.vid;
+      figure.top:=0;
+    end;
+//Сдвигаем фигуру на одну клетку ниже
+  Figure.top:=figure.top+1;
+end;
+
+end.
