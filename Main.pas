@@ -97,8 +97,6 @@ procedure TForm1.FormShow(Sender: TObject);//При показе формы отрисовываем белый
 begin
   Image1.Canvas.Brush.Color:=clWhite;
   Image1.Canvas.FillRect(Image1.BoundsRect);
-  //Button1.ControlState:=[csFocusing];
-  //Button2.ControlState:=[csFocusing];
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);//По щелчку таймера
