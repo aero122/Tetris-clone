@@ -17,8 +17,9 @@ type
     procedure FormShow(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure Draw();
   private
+    procedure Loc(l1, t1, l2, t2, l3, t3, l4, t4: byte);
     { Private declarations }
   public
     { Public declarations }
@@ -26,8 +27,14 @@ type
 
 type
   fig=record
-    left:byte;
-    top:byte;
+    l1:byte;
+    t1:byte;
+    l2:byte;
+    t2:byte;
+    l3:byte;
+    t3:byte;
+    l4:byte;
+    t4:byte;
     vid:byte;
   end;
 
@@ -41,7 +48,11 @@ implementation
 
 {$R *.dfm}
 
-procedure TForm1.Button1Click(Sender: TObject);
+{Чтобы не забыть:
+Одна ячейка фигуры - квадрат 30х30
+Поле 10х20}
+
+procedure TForm1.Button1Click(Sender: TObject);//Тестовое заполнение
 var
   i: Integer;
   j: Integer;
@@ -53,39 +64,39 @@ begin
 
 end;
 
+Procedure TForm1.Loc(l1,t1,l2,t2,l3,t3,l4,t4:byte);
+//Задание координат фигуре
+begin
+  figure.t1:=t1;
+  figure.t2:=t2;
+  figure.t3:=t3;
+  figure.t4:=t4;
+  figure.l1:=l1;
+  figure.l2:=l2;
+  figure.l3:=l3;
+  figure.l4:=l4;
+end;
+
 procedure TForm1.Button2Click(Sender: TObject);//Создаём фигуру
 begin
   figure.vid:=1;
-  figure.left:=5;
-  figure.top:=1;
+  loc(4,1,5,1,4,2,5,2);
 end;
 
 procedure TForm1.FormKeyDown(Sender: TObject; var Key: Word;//При нажатии клавиш клавиатуры
   Shift: TShiftState);
 begin
   //ShowMessage(IntToStr(key));
-  case key of
-    65:if figure.left>1 then figure.left:=figure.left-1;//Смещение влево при нажатии A
-    68:if figure.left<8 then figure.left:=figure.left+1;//Смещение вправо при нажатии D
+  case key of                      { TODO : Добавить проверку на фигуру справа-слева }
+    65:if figure.l1>1 then figure.l1:=figure.l1-1;//Смещение влево при нажатии A
+    68:if figure.l1<10 then figure.l1:=figure.l1+1;//Смещение вправо при нажатии D
   end;
   //Вызываем переотрисовку
-  Timer1Timer(Self);
+  Draw();
 end;
 
-procedure TForm1.FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
-begin
-  //ShowMessage(IntToStr(key));
-end;
 
-procedure TForm1.FormShow(Sender: TObject);//При показе формы отрисовываем белый фон
-begin
-  Image1.Canvas.Brush.Color:=clWhite;
-  Image1.Canvas.FillRect(Image1.BoundsRect);
-  //Button1.ControlState:=[csFocusing];
-  //Button2.ControlState:=[csFocusing];
-end;
-
-procedure TForm1.Timer1Timer(Sender: TObject);//По щелчку таймера
+procedure TForm1.Draw();//Процедура переотрисовки поля
 var
   i: Integer;
   j: Integer;
@@ -101,16 +112,31 @@ begin
 //Отрисовываем текущую фигуру
   case figure.vid of
   1:
-    Image1.Canvas.Rectangle(figure.left*30-30,figure.top*30-30,figure.left*30,figure.top*30)
+    Image1.Canvas.Rectangle(figure.l1*30-30,figure.t1*30-30,figure.l1*30,figure.t1*30)
   end;
+end;
+
+procedure TForm1.FormShow(Sender: TObject);//При показе формы отрисовываем белый фон
+begin
+  Image1.Canvas.Brush.Color:=clWhite;
+  Image1.Canvas.FillRect(Image1.BoundsRect);
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);//По щелчку таймера
+var
+  i: Integer;
+  j: Integer;
+begin
+//Отрисовываем игровое поле, предварительно очистив
+  Draw();
 //Если фигура достигла "низа" или другой фигуры, то генерируем следующую
-  if (figure.top=20) or (field[20-figure.top,figure.left]<>0) then
+  if (figure.t1=20) or (field[20-figure.t1,figure.l1]<>0) then
     begin
-      field[20-figure.top+1,figure.left]:=figure.vid;
-      figure.top:=0;
+      field[20-figure.t1+1,figure.l1]:=figure.vid;//Дополняем поле упавшей фигурой
+      figure.t1:=0;//Создание фигуры
     end;
 //Сдвигаем фигуру на одну клетку ниже
-  Figure.top:=figure.top+1;
+  Figure.t1:=figure.t1+1;
 end;
 
 end.

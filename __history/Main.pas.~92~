@@ -153,14 +153,7 @@ begin
 //Отрисовываем игровое поле, предварительно очистив
   Draw();
 //Если фигура достигла "низа" или другой фигуры, то генерируем следующую
-  if (figure.t1=20)
-  or (figure.t2=20)
-  or (figure.t3=20)
-  or (figure.t4=20)
-  or (field[20-figure.t1,figure.l1]<>0)
-  or (field[20-figure.t2,figure.l2]<>0)
-  or (field[20-figure.t3,figure.l3]<>0)
-  or (field[20-figure.t4,figure.l4]<>0) then
+  if (figure.t1=20) or (figure.t2=20) or (figure.t3=20) or (figure.t4=20) or (field[20-figure.t1,figure.l1]<>0) then
     begin
       //Дополняем поле упавшей фигурой
       field[20-figure.t1+1,figure.l1]:=figure.vid;
@@ -168,7 +161,7 @@ begin
       field[20-figure.t3+1,figure.l3]:=figure.vid;
       field[20-figure.t4+1,figure.l4]:=figure.vid;
       //Создание фигуры
-      gen();
+      figure.t1:=0;
     end;
 //Сдвигаем фигуру на одну клетку ниже
   Figure.t1:=figure.t1+1;
