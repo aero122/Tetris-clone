@@ -301,7 +301,7 @@ var
 begin
 //Отрисовываем игровое поле, предварительно очистив
   Image1.Canvas.Brush.Color:=clWhite;
-  Image1.Picture:=nil;
+  Image1.Canvas:=nil;
   Image1.Canvas.FillRect(Image1.BoundsRect);
   for i:=1 to 20 do
     for j:= 1 to 10 do

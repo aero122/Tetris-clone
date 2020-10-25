@@ -236,7 +236,7 @@ Begin
       i:=i-1; //Т.к. строки съехали вниз на одну, перепроверяем текущую строку снова
       Draw(); //Переотрисовываем поле
       Lin:=Lin+1;
-      Label1.Caption:='Линий: '+IntToStr(lin);
+      Label1.Caption:='Линий: '+lin;
       if timer1.Interval>20 then timer1.interval:=timer1.Interval-20; //Увеличиваем скорость игры
     end;
     i:=i+1;

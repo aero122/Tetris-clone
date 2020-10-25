@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 0
   Caption = 'Form1'
   ClientHeight = 618
-  ClientWidth = 635
+  ClientWidth = 402
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,6 +21,19 @@ object Form1: TForm1
     Top = 8
     Width = 300
     Height = 600
+  end
+  object Label1: TLabel
+    Left = 314
+    Top = 70
+    Width = 51
+    Height = 15
+    Caption = #1051#1080#1085#1080#1081': 0'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = 15
+    Font.Name = 'Arial Rounded MT Bold'
+    Font.Style = []
+    ParentFont = False
   end
   object Button1: TButton
     Left = 314
@@ -44,7 +57,7 @@ object Form1: TForm1
   end
   object Timer1: TTimer
     OnTimer = Timer1Timer
-    Left = 448
+    Left = 360
     Top = 368
   end
 end

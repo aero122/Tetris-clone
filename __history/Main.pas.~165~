@@ -13,6 +13,7 @@ type
     Button1: TButton;
     Button2: TButton;
     Label1: TLabel;
+    PaintBox1: TPaintBox;
     procedure Button1Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -300,45 +301,47 @@ var
   j: Integer;
 begin
 //Отрисовываем игровое поле, предварительно очистив
-  Image1.Canvas.Brush.Color:=clWhite;
-  Image1.Picture:=nil;
-  Image1.Canvas.FillRect(Image1.BoundsRect);
+  PaintBox1.Canvas.Brush.Color:=clWhite;
+  PaintBox1:=nil;
+  PaintBox1.Canvas.FillRect(PaintBox1.BoundsRect);
   for i:=1 to 20 do
     for j:= 1 to 10 do
       if field[i,j]<>0 then
       begin
         case field[i,j] of
-          1:Image1.Canvas.Brush.Color:=clRed;
-          2:Image1.Canvas.Brush.Color:=clOlive;
-          3:Image1.Canvas.Brush.Color:=clYellow;
-          4:Image1.Canvas.Brush.Color:=clGreen;
-          5:Image1.Canvas.Brush.Color:=clAqua;
-          6:Image1.Canvas.Brush.Color:=clBlue;
-          7:Image1.Canvas.Brush.Color:=clFuchsia;
+          1:PaintBox1.Canvas.Brush.Color:=clRed;
+          2:PaintBox1.Canvas.Brush.Color:=clOlive;
+          3:PaintBox1.Canvas.Brush.Color:=clYellow;
+          4:PaintBox1.Canvas.Brush.Color:=clGreen;
+          5:PaintBox1.Canvas.Brush.Color:=clAqua;
+          6:PaintBox1.Canvas.Brush.Color:=clBlue;
+          7:PaintBox1.Canvas.Brush.Color:=clFuchsia;
         end;
-        Image1.Canvas.Rectangle(j*30-30,630-i*30,j*30,600-i*30);
+        PaintBox1.Canvas.Rectangle(j*30-30,630-i*30,j*30,600-i*30);
       end;
 //Отрисовываем текущую фигуру
   case figure.vid of
-    1:Image1.Canvas.Brush.Color:=clRed;
-    2:Image1.Canvas.Brush.Color:=clOlive;
-    3:Image1.Canvas.Brush.Color:=clYellow;
-    4:Image1.Canvas.Brush.Color:=clGreen;
-    5:Image1.Canvas.Brush.Color:=clAqua;
-    6:Image1.Canvas.Brush.Color:=clBlue;
-    7:Image1.Canvas.Brush.Color:=clFuchsia;
+    1:PaintBox1.Canvas.Brush.Color:=clRed;
+    2:PaintBox1.Canvas.Brush.Color:=clOlive;
+    3:PaintBox1.Canvas.Brush.Color:=clYellow;
+    4:PaintBox1.Canvas.Brush.Color:=clGreen;
+    5:PaintBox1.Canvas.Brush.Color:=clAqua;
+    6:PaintBox1.Canvas.Brush.Color:=clBlue;
+    7:PaintBox1.Canvas.Brush.Color:=clFuchsia;
   end;
-  Image1.Canvas.Rectangle(figure.l1*30-30,figure.t1*30-30,figure.l1*30,figure.t1*30);
-  Image1.Canvas.Rectangle(figure.l2*30-30,figure.t2*30-30,figure.l2*30,figure.t2*30);
-  Image1.Canvas.Rectangle(figure.l3*30-30,figure.t3*30-30,figure.l3*30,figure.t3*30);
-  Image1.Canvas.Rectangle(figure.l4*30-30,figure.t4*30-30,figure.l4*30,figure.t4*30);
+  PaintBox1.Canvas.Rectangle(figure.l1*30-30,figure.t1*30-30,figure.l1*30,figure.t1*30);
+  PaintBox1.Canvas.Rectangle(figure.l2*30-30,figure.t2*30-30,figure.l2*30,figure.t2*30);
+  PaintBox1.Canvas.Rectangle(figure.l3*30-30,figure.t3*30-30,figure.l3*30,figure.t3*30);
+  PaintBox1.Canvas.Rectangle(figure.l4*30-30,figure.t4*30-30,figure.l4*30,figure.t4*30);
 end;
 
 //При показе формы отрисовываем белый фон
 procedure TForm1.FormShow(Sender: TObject);
 begin
-  Image1.Canvas.Brush.Color:=clWhite;
-  Image1.Canvas.FillRect(Image1.BoundsRect);
+  //Image1.Canvas.Brush.Color:=clWhite;
+  //Image1.Canvas.FillRect(Image1.BoundsRect);
+  PaintBox1.Canvas.Brush.Color:=clWhite;
+  PaintBox1.Canvas.FillRect(Image1.BoundsRect);
 end;
 
 //По щелчку таймера
